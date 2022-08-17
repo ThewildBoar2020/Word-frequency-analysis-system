@@ -22,16 +22,10 @@ http://localhost:1234/admin/login.jsp
 现在这个统计的是一个词语， 如果不希望统计时 在stopword.dic 在设置后，就不会在统计了
 
 注意的是 设置完成后，重启一下服务
-
 修改部分：*****
 1.用户栏目功能只能显示两个，添加再webapp/admin/js/cms/article/list.js中第45行！！！
-
 2.数据库修改：resources/mapper/application.properties中的第5/6行分别修改密码以及端口号
-
 3.注意事项：
 djk1.8
 数据库的表、表中属性的字符集
 
-=======
-★内容：本项目针对用户无法及时找出数据量较大的文本的热点信息的难点问题，在SpringBoot框架上利用Spark大数据组件对用户上传至MySQL上的文本信息进行词频计算，最后实现文本热点的前端可视化展示。  ★技术栈：IK分词器、Spark、MyBatis、SpringBoot
->>>>>>> 6129c9b750d2bf3fe27e7d6f3904c149bae9174d
