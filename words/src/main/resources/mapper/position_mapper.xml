@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analysis.words.mapper.PositionMapper">
+    <select id="findAll" resultType="com.analysis.words.entity.Position">
+        select * from c_position where 1=1 and is_deleted=0
+        <if test="start!=null and start>0">
+            limit #{start},#{limit}
+        </if>
+
+    </select>
+
+    <select id="findById" resultType="com.analysis.words.entity.Position">
+        select * from c_position where position_id=#{positionId}
+    </select>
+
+    <select id="findTotalSize" resultType="int">
+        select count(*) from c_position;
+    </select>
+
+    <insert id="add" parameterType="com.analysis.words.entity.Position">
+        INSERT INTO `c_position`
+        (
+        `position_no`,
+        `position_name`,
+        `qualification`
+        )
+        VALUES
+        (
+        #{positionNo},
+        #{positionName},
+        #{qualification}
+        );
+
+    </insert>
+
+    <update id="edit" parameterType="com.analysis.words.entity.Position">
+        update `c_position`
+        set
+        `position_no` = #{positionNo},
+        `position_name` = #{positionName},
+        `qualification` = #{qualification}
+        where `position_id` = #{positionId};
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        update `c_position`
+        set
+        `is_deleted` = -1
+        where `position_id` = #{positionId};
+    </delete>
+
+</mapper>

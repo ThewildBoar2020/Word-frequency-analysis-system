@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analysis.words.mapper.ContentMapper">
+  <resultMap id="BaseResultMap" type="com.analysis.words.entity.Content">
+    <id column="content_id" jdbcType="INTEGER" property="contentId" />
+    <result column="channel_id" jdbcType="BIGINT" property="channelId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="title_img" jdbcType="VARCHAR" property="titleImg" />
+    <result column="media_path" jdbcType="VARCHAR" property="mediaPath" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.analysis.words.entity.Content">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <association property="channel" javaType="com.analysis.words.entity.Channel">
+      <result column="channel_id" property="channelId"></result>
+      <result column="channel_name" property="title"></result>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    content_id, channel_id, title,content, title_img, media_path, author, create_time, is_deleted
+  </sql>
+
+
+  <select id="findAll" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+    select
+    c.*,ch.channel_id,ch.title as channel_name
+    from cms_content c,cms_channel ch
+    where c.channel_id=ch.channel_id and c.is_deleted=0
+    <if test="title!=null">
+      and c.title like concat('%',#{title},'%')
+    </if>
+    <if test="channelId!=null and channelId!=0">
+      and c.channel_id=#{channelId}
+    </if>
+    order by c.content_id desc
+    <if test="start!=null and limit!=null">
+      limit #{start},#{limit}
+    </if>
+  </select>
+
+  <select id="findById" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+    select 
+    c.*,ch.channel_id,ch.title as channel_name
+    from cms_content c,cms_channel ch
+    where c.channel_id=ch.channel_id and c.content_id = #{contentId}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+     update cms_content set is_deleted = -1
+    where content_id = #{contentId}
+  </delete>
+
+  <insert id="add" parameterType="com.analysis.words.entity.Content">
+    insert into cms_content (channel_id,title,title_img, media_path, author, create_time,content)
+    values (#{channelId}, #{title},
+      #{titleImg}, #{mediaPath}, #{author},
+      #{createTime},#{content}
+      )
+  </insert>
+
+  <select id="findTotalSize" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from cms_content where 1=1 and is_deleted=0
+    <if test="title != null">
+     and title like concat('%',#{title},'%')
+    </if>
+  </select>
+
+  <update id="edit" parameterType="com.analysis.words.entity.Content">
+    update cms_content
+    set channel_id = #{channelId,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      title_img = #{titleImg,jdbcType=VARCHAR},
+      media_path = #{mediaPath,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where content_id = #{contentId,jdbcType=INTEGER}
+  </update>
+</mapper>

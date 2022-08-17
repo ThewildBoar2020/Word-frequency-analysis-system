@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analysis.words.mapper.DepartmentMapper">
+    <select id="findAll" resultType="com.analysis.words.entity.Department">
+        select * from c_department where 1=1 and status=1
+        <if test="department_name!=null and department_name!=''">
+            and department_name like concat('%', #{department_name}, '%')
+        </if>
+        <if test="start!=null and start>0">
+            limit #{start},#{limit}
+        </if>
+
+    </select>
+
+    <select id="findById" resultType="com.analysis.words.entity.Department">
+        select * from c_department where department_id=#{department_id}
+    </select>
+
+    <select id="findTotalSize" resultType="int">
+        select count(*) from c_department;
+    </select>
+
+    <insert id="add" parameterType="com.analysis.words.entity.Department">
+        insert into `c_department`
+        (
+        `department_name`,
+        `department_desc`
+        )
+        values
+        (
+        #{departmentName},
+        #{departmentDesc}
+        );
+    </insert>
+
+    <update id="edit" parameterType="com.analysis.words.entity.Department">
+        update `c_department`
+        set
+        `department_name` = #{departmentName},
+        `department_desc` = #{departmentDesc}
+        where `department_id` = #{departmentId};
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        update `c_department`
+        set
+        `status` = 0
+        where `department_id` = #{department_id};
+    </delete>
+
+</mapper>

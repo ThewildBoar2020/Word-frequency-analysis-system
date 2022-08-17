@@ -1,0 +1,170 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #EEF2F6;
+}
+
+#content
+{
+	margin: 5px 10px 20px 0px;
+	background:url(../images/desk/arrowf30_big.jpg) no-repeat 0 3px;
+}
+#content #contentHead
+{
+	margin:0 20px;
+	font-size:18px;
+	line-height:35px;
+	color:#666;
+	font-weight:bold;
+}
+#content #contentMain
+{
+	padding:20px 5px 20px 20px;
+}
+.line
+{
+	border-bottom: 1px  dashed #CCC;
+}
+#content h3,
+#content h3 a
+{
+	font-size: 16px;
+	line-height:1.8em;
+	letter-spacing:0.1em;
+	font-family: "黑体";
+	font-weight:normal;
+	color: #F30;
+}
+#content h3 span
+{
+	font-size: 14px;
+	line-height:1em;
+	font-family: "宋体";
+	color: #333;
+	font-weight:bold;
+}
+#content h4
+{
+	font-size: 13px;
+	line-height:1.8em;
+	letter-spacing:0.1em;
+	font-family: "宋体";
+	font-weight:bold;
+	color: #333;
+	padding-left:2em;
+}
+#content  p ,
+#content  ul,
+#content  li
+{
+	font-size:12px;
+	line-height:1.8em;
+	letter-spacing:0.1em;
+	color:#666;
+}
+#content p
+{	
+	text-indent:2em;
+}
+#content #contentList li {
+	color: #666;
+	min-height:180px;
+	*height:180px;
+}
+#content #contentList li{
+	padding-left: 170px;
+	margin:20px;
+}
+#content #contentList li img.left {
+	float: left;
+	width: 150px;
+	margin: 1em 0 16px -170px;
+}
+#content #contentDoc
+{
+	padding:10px 20px;
+}
+#content #contentDoc h1,
+#content #contentDoc h2,
+#content #contentDoc h3,
+#content #contentDoc h4
+{
+	line-height: 1.5em;
+	color: #333;
+	font-weight:bold;
+	font-family: "楷体_GB2312","楷体";
+}
+#content #contentDoc h1
+{
+	font-size: 24px;
+	margin:1.5em;
+}
+#content #contentDoc h2
+{
+	font-size: 18px;
+	margin:1em;
+	font-family: "宋体_GB2312","宋体";
+}
+#content #contentDoc h3
+{
+	font-size: 14px;
+	margin:1em;
+}
+#content #contentDoc h4
+{
+	font-size: 14px;
+	font-weight:normal;
+	margin:1em;
+}
+#content #contentDoc p.zhaiyao
+{
+	font-size: 12px;
+	line-height: 1.8em;
+	color: #666;
+	border:2px dotted #ccc;
+	padding:10px;
+	font-family: "宋体";
+}
+#content #contentDoc p ,
+#content #contentDoc ul{
+	font-size: 14px;
+	line-height: 1.8em;
+	font-family: "宋体";
+	color:#666;
+	margin:1em;
+}
+#content #contentDoc p
+{
+	text-indent: 2em;
+}
+#service #contentMain li
+{
+	display: block;
+	position: relative;
+}
+#service #contentMain li.detail
+{
+	margin: 1em 0px;
+	padding-left: 200px;
+	padding-bottom: 1em;
+	min-height:160px;
+	*height:160px;
+}
+#service #contentMain li.detail img{
+	float: left;
+	width: 190px;
+	margin: 0px 0 10px -200px;
+}
+#service #contentMain  li.detail2
+{
+	margin: 1em 0px;
+	padding-left: 138px;
+	padding-bottom: 1em;
+	min-height:130px;
+	*height:130px;
+}
+#service #contentMain li.detail2 img{
+	float: left;
+	width: 128px;
+	margin: 0px 0 10px -138px;
+}

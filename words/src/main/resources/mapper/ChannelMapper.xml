@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.analysis.words.mapper.ChannelMapper">
+
+  <resultMap id="BaseResultMap" type="com.analysis.words.entity.Channel">
+    <id column="channel_id" jdbcType="BIGINT" property="channelId" />
+    <result column="chanel_parent_id" jdbcType="BIGINT" property="chanelParentId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    channel_id, chanel_parent_id, title, description, is_deleted
+  </sql>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cms_channel where is_deleted=0
+  </select>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_channel
+    where channel_id = #{channelId}
+  </select>
+
+
+
+  <insert id="add" parameterType="com.analysis.words.entity.Channel">
+    insert into cms_channel (chanel_parent_id, title,
+      description, is_deleted)
+    values (#{chanelParentId}, #{title},
+      #{description}, #{isDeleted})
+  </insert>
+
+  <update id="edit" parameterType="com.analysis.words.entity.Channel">
+    update cms_channel
+    set title = #{title},
+      description = #{description}
+    where channel_id = #{channelId}
+  </update>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    update cms_channel
+    set is_deleted = -1
+    where channel_id = #{channelId}
+  </delete>
+
+  <select id="findTotalSize" resultType="java.lang.Integer">
+    select count(*) from cms_channel
+  </select>
+
+
+
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 指向接口-->
+<mapper namespace="com.analysis.words.mapper.UserInfoMapper">
+    <select id="findById" parameterType="java.util.Map" resultMap="user_department_position_map">
+        select u.*,d.department_id,d.department_name,p.position_id,p.position_name
+        from c_userinfo u,c_department d,c_position p
+        where u.department_id=d.department_id and u.position_id=p.position_id and u.is_deleted=0
+        <if test="userinfoId!=null">
+            and u.userinfo_id=#{userinfoId}
+        </if>
+
+    </select>
+
+    <select id="login" parameterType="java.util.Map" resultType="com.analysis.words.entity.UserInfo">
+        select *
+        from c_userinfo
+        where username = #{username} and password = #{password}
+    </select>
+
+   <!-- <select id="findAll" parameterType="java.util.Map" resultType="cn.turing.ssm.entity.UserInfo">
+        select * from c_userinfo where 1=1 and is_deleted=0
+        <if test="username!=null and username!=''">
+            and username like concat('%', #{username}, '%')
+        </if>
+        <if test="phone!=null and phone!=''">
+            and phone like concat('%', #{phone}, '%')
+        </if>
+            limit #{start},#{limit}
+    </select>-->
+    <select id="findAll" parameterType="java.util.Map" resultMap="user_department_position_map">
+        select u.*,d.department_id,d.department_name,p.position_id,p.position_name
+        from c_userinfo u,c_department d,c_position p
+        where u.department_id=d.department_id and u.position_id=p.position_id and u.is_deleted=0
+        <if test="username!=null and username!=''">
+            and u.username like concat('%', #{username}, '%')
+        </if>
+        <if test="phone!=null and phone!=''">
+            and u.phone like concat('%', #{phone}, '%')
+        </if>
+        <if test="power!=null and power!=1">
+            and u.userinfo_id = #{power}
+        </if>
+        order by u.userinfo_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+
+    </select>
+    
+    <resultMap id="user_department_position_map" type="com.analysis.words.entity.UserInfo">
+        <id column="userinfo_id" property="userinfoId"></id>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="truename" property="truename"/>
+        <result column="phone" property="phone"/>
+        <result column="power" property="power"/>
+        <association property="department" javaType="com.analysis.words.entity.Department">
+            <id column="department_id" property="departmentId"></id>
+            <result column="department_name" property="departmentName"></result>
+        </association>
+        <association property="position" javaType="com.analysis.words.entity.Position">
+            <id column="position_id" property="positionId"></id>
+            <result column="position_name" property="positionName"></result>
+        </association>
+    </resultMap>
+    
+    <select id="findTotalSize" resultType="int" parameterType="java.util.Map">
+        select count(*) from c_userinfo where 1=1 and is_deleted=0
+        <if test="username!=null and username!=''">
+            and username like concat('%', #{username}, '%')
+        </if>
+        <if test="phone!=null and phone!=''">
+            and phone like concat('%', #{phone}, '%')
+        </if>
+    </select>
+
+    <insert id="add" parameterType="com.analysis.words.entity.UserInfo">
+        INSERT INTO `c_userinfo`
+        (
+        `username`,
+        `password`,
+        `truename`,
+        `phone`,
+        `power`,
+        department_id,position_id)
+        VALUES
+        (
+        #{username},
+        #{password},
+        #{truename},
+        #{phone},
+        #{power},
+        #{departmentId},
+        #{positionId});
+        <selectKey resultType="int" keyProperty="userinfoId" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="edit" parameterType="com.analysis.words.entity.UserInfo">
+        UPDATE `c_userinfo`
+        SET
+        `username` = #{username},
+        `password` = #{password},
+        `truename` = #{truename},
+        `phone` = #{phone},
+        `power` = #{power},
+        `department_id` = #{departmentId},
+        `position_id` = #{positionId}
+        WHERE `userinfo_id` = #{userinfoId};
+
+    </update>
+
+    <update id="positionChange" parameterType="java.lang.Long">
+        UPDATE `c_userinfo`
+        SET
+        `position_id` = #{positionId}
+        WHERE `userinfo_id` = #{userinfoId};
+    </update>
+
+    <update id="modifyPassword" parameterType="java.lang.Object">
+        UPDATE `c_userinfo`
+        SET
+        `password` = #{newPassword}
+        WHERE `userinfo_id` = #{userinfoId};
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        UPDATE `c_userinfo`
+        SET
+        `is_deleted` = -1
+        WHERE `userinfo_id` = #{userinfoId};
+
+    </delete>
+</mapper>

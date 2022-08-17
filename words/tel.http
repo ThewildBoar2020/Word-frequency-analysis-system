@@ -1,0 +1,6 @@
+GET http://localhost:1234/admin/chineseChart
+Accept: application/json
+
+###
+GET http://localhost:1234/admin/englishChart
+Accept: application/json
