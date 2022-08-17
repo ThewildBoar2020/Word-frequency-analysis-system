@@ -1,8 +1,6 @@
 # Word-frequency-analysis-system
-<<<<<<< HEAD
 ★内容：本项目针对用户无法及时找出数据量较大的文本的热点信息的难点问题，在SpringBoot框架上利用Spark大数据组件对用户上传至MySQL上的文本信息进行词频计算，最后实现文本热点的前端可视化展示。
-
-  ★技术栈：IK分词器、Spark、MyBatis、SpringBoot
+★技术栈：IK分词器、Spark、MyBatis、SpringBoot
 
 # 文本大数据技术词频分析系统实现
 
